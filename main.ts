@@ -33,6 +33,16 @@ if (INVISIBLE.test(LINE)) {
   process.exit(1);
 }
 
+// Reviser gate (second pass): the line must be cleanly spaced — no
+// leading/trailing whitespace and no doubled spaces — so the tagline
+// reads exactly as written, with no padding the eye has to skip.
+if (LINE !== LINE.trim() || LINE.includes("  ")) {
+  console.error(
+    "gate failed: line must have no leading/trailing or doubled spaces",
+  );
+  process.exit(1);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", LINE, "utf8");
 
